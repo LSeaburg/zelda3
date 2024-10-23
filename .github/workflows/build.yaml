@@ -37,7 +37,7 @@ jobs:
       run: |
         sudo apt update
         sudo apt install -y libsdl2-dev
-        cp /runner/zelda3.sfc /runner/_work/zelda3/zelda3/zelda3.sfc
+        cp /zelda3.sfc /runner/_work/zelda3/zelda3/zelda3.sfc
 
     - name: Build
       run: make -j$(nproc) zelda3

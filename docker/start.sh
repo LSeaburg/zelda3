@@ -1,7 +1,6 @@
 #!/bin/bash
 
-cd /runner
-
-./config.sh --url https://github.com/LSeaburg/zelda3 --token AELHEOWUH3LXEXHZ5ZYQ3ZLHDBHE6
-
+# Create the runner and start the configuration experience
+./config.sh --url https://github.com/LSeaburg/zelda3 --token AELHEOU7DOCHQP2OI73LOFLHDBOPY
+# Last step, run it!
 ./run.sh

@@ -26,18 +26,20 @@ COPY docker/install-devkitpro-pacman ./install-devkitpro-pacman
 RUN chmod +x ./install-devkitpro-pacman && \
     sudo ./install-devkitpro-pacman
 
-RUN curl -o actions-runner-linux-x64-2.320.0.tar.gz -L https://github.com/actions/runner/releases/download/v2.320.0/actions-runner-linux-x64-2.320.0.tar.gz && \
-    mkdir -p  /runner/_work/zelda3/zelda3/assets/ && \
-    tar xzf ./actions-runner-linux-x64-2.320.0.tar.gz -C /runner 
+# Install GitHubRunner
+
+RUN mkdir actions-runner && \
+    curl -o actions-runner-linux-x64-2.320.0.tar.gz -L https://github.com/actions/runner/releases/download/v2.320.0/actions-runner-linux-x64-2.320.0.tar.gz && \
+    tar xzf ./actions-runner-linux-x64-2.320.0.tar.gz -C /actions-runner 
 
 # Set the working directory
-WORKDIR /runner
+WORKDIR /actions-runner
 
 # Copy the start.sh script into the container
-COPY docker/start.sh /runner/start.sh
+COPY docker/start.sh /actions-runner/start.sh
 
 # Make the script executable
-RUN chmod +x /runner/start.sh
+RUN chmod +x /actions-runner/start.sh
 RUN chmod -R 777 /var
 
 RUN useradd -m runner
@@ -50,7 +52,7 @@ RUN sed -i 's/^Defaults\s\+requiretty/# Defaults requiretty/' /etc/sudoers
 
 USER runner
 
-COPY ../zelda3.sfc /runner/zelda3.sfc
+COPY ../zelda3.sfc /zelda3.sfc
 
 # Set the entry point to the start.sh script
-ENTRYPOINT ["/runner/start.sh"]
+ENTRYPOINT ["/actions-runner/start.sh"]
